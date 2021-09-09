@@ -1,0 +1,73 @@
+header {
+  text-align: center;
+}
+
+main {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+footer div {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5em;
+  margin-right: 3em;
+}
+
+.card {
+  text-align: center;
+  height: 100px;
+  line-height: 100px;
+  padding: 2px;
+  border-radius: 3px;
+  /* margin: 2px; */
+  border: none;
+  font-size: 1rem;
+  font-weight: 900;
+  color: white;
+}
+
+#gray {
+  background-color: black;
+}
+
+#red {
+  background-color: red;
+}
+
+#blue {
+  background-color: blue;
+}
+
+#black {
+  background-color: #e8e8e8;
+  color: black;
+}
+
+#blackred {
+  background-color: #e8e8e8;
+  color: red;
+}
+
+#blackblue {
+  background-color: #e8e8e8;
+  color: blue;
+}
+
+#blackblue {
+  background-color: #e8e8e8;
+}
+
+#blackblack {
+  background-color: #ede2cc;
+  color: black;
+}
+
+#blackgray {
+  background-color: #e8e8e8;
+  color: black;
+}
