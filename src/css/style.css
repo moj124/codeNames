@@ -5,7 +5,7 @@ header {
 main div {
   /* padding-left: 100px; */
   display: grid;
-  grid-template-columns:auto auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   padding-left: 20%;
@@ -76,9 +76,9 @@ footer div {
 }
 
 #redText {
-  color:#d13030;
+  color: #d13030;
 }
 
 #blueText {
-  color:#5786cf;
+  color: #5786cf;
 }
