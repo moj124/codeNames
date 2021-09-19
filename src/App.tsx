@@ -1,9 +1,8 @@
-import { Card } from "./utils/component/Card";
+import { Card } from "./component/Card";
 import {shuffle} from './utils/shuffle';
+import {useState} from 'react';
 
-function App(): JSX.Element {
-
-  const words = [   'Acne',         'Acre',         'Addendum',      'Advertise',
+const words = [   'Acne',         'Acre',         'Addendum',      'Advertise',
     'Aircraft',     'Aisle',        'Alligator',     'Alphabetize',
     'America',      'Ankle',        'Apathy',        'Applause',
     'Applesauc',    'Application',  'Archaeologist', 'Aristocrat',
@@ -172,11 +171,14 @@ function App(): JSX.Element {
     'Worm',         'Wristwatch',   'Yardstick',     'Zamboni',
     'Zen',          'Zero',         'Zipper',        'Zone',
     'Zoo']
-    
 
-  const arr = Array.from({length:25},() => words[Math.floor(Math.random() * words.length)])
+function App(): JSX.Element {
+  const arr = shuffle(Array.from({length:25},(element,index) => [words[Math.floor(Math.random() * words.length)],index < 8 ? 'blackblack': index < 16 ? 'blackred': index < 24 ? 'blackblue': 'blackgray']));
+  const [state, setState] = useState<string[][]>(arr);
   
-  const post = shuffle(arr.map((element,index) => <Card key={index} word = {element} color={index < 8 ? 'black': index < 16 ? 'red': index < 24 ? 'blue': 'gray'}/>))
+  const post = state.map((element,index) => <Card key={index} data ={state} setState ={(arr:string[][]) => setState(arr)} word = {element[0]} color={element[1]}/>);
+  const reds = 8-state.filter(element => element[1] === 'red').length;
+  const blues  = 8-state.filter(element => element[1] === 'blue').length;
   
   return (
   <>
@@ -185,14 +187,21 @@ function App(): JSX.Element {
     </header>
 
     <main>
-      {post}
+      <div className='info'>
+        <p><span id='redText'>{reds}</span> - <span id='blueText'>{blues}</span></p>
+      </div>
+      <div>
+        {post}
+      </div>
     </main>
 
     <footer>
       <div>
         <button>Player</button>
         <button>Spymaster</button>
+        <button onClick={() => setState(arr)}>Next game</button>
       </div>
+      
     </footer>
   </>);
 }

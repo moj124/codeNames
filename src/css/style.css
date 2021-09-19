@@ -2,13 +2,14 @@ header {
   text-align: center;
 }
 
-main {
+main div {
+  /* padding-left: 100px; */
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns:auto auto auto auto auto;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 footer div {
@@ -16,15 +17,17 @@ footer div {
   justify-content: flex-end;
   margin-top: 1.5em;
   margin-right: 3em;
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 .card {
   text-align: center;
-  height: 100px;
+  /* height: 100%; */
   line-height: 100px;
   padding: 2px;
   border-radius: 3px;
-  /* margin: 2px; */
+  /* width:200px; */
   border: none;
   font-size: 1rem;
   font-weight: 900;
@@ -36,26 +39,26 @@ footer div {
 }
 
 #red {
-  background-color: red;
+  background-color: #d13030;
 }
 
 #blue {
-  background-color: blue;
+  background-color: #5786cf;
 }
 
 #black {
-  background-color: #e8e8e8;
+  background-color: #ede2cc;
   color: black;
 }
 
 #blackred {
   background-color: #e8e8e8;
-  color: red;
+  color: #d13030;
 }
 
 #blackblue {
   background-color: #e8e8e8;
-  color: blue;
+  color: #5786cf;
 }
 
 #blackblue {
@@ -63,11 +66,19 @@ footer div {
 }
 
 #blackblack {
-  background-color: #ede2cc;
+  background-color: #e8e8e8;
   color: black;
 }
 
 #blackgray {
   background-color: #e8e8e8;
   color: black;
+}
+
+#redText {
+  color:#d13030;
+}
+
+#blueText {
+  color:#5786cf;
 }

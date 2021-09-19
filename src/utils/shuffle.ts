@@ -1,4 +1,4 @@
-export function shuffle(array: JSX.Element[]): JSX.Element[] {
+export function shuffle(array: string[][]): string[][] {
   let currentIndex = array.length,
     randomIndex;
 
