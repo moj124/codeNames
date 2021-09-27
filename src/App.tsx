@@ -1,7 +1,6 @@
 import { Card } from "./component/Card";
 import { shuffle } from "./utils/shuffle";
 import { useState } from "react";
-
 const words = [
   "Acne",
   "Acre",
@@ -679,16 +678,23 @@ const words = [
 ];
 
 function App(): JSX.Element {
+  const [win, setWin] = useState<boolean>(false);
+  const [turn, setTurn] = useState<boolean>(false);
+  const [overview, setView] = useState<boolean>(false);
   const arr = shuffle(
     Array.from({ length: 25 }, (element, index) => [
       words[Math.floor(Math.random() * words.length)],
-      index < 8
+      index < 7
         ? "blackblack"
-        : index < 16
+        : index < 15
         ? "blackred"
-        : index < 24
+        : index < 23
         ? "blackblue"
-        : "blackgray",
+        : index < 24
+        ? "blackgray"
+        : !turn
+        ? "blackred"
+        : "blackblue",
     ])
   );
   const [state, setState] = useState<string[][]>(arr);
@@ -697,35 +703,51 @@ function App(): JSX.Element {
     <Card
       key={index}
       data={state}
+      turn={turn}
+      overview={overview}
+      win = {win}
+      setWin = {(bool: boolean) => setWin(bool)}
       setState={(arr: string[][]) => setState(arr)}
+      setTurn={(bool: boolean) => setTurn(bool)}
       word={element[0]}
       color={element[1]}
     />
   ));
-  const reds = 8 - state.filter((element) => element[1] === "red").length;
-  const blues = 8 - state.filter((element) => element[1] === "blue").length;
+
+  const reds = state.filter((element) => element[1] === "blackred").length;
+  const blues = state.filter((element) => element[1] === "blackblue").length;
 
   return (
     <>
       <header>
         <h1>CODENAMES</h1>
       </header>
-
+      
       <main>
         <div className="info">
           <p>
             <span id="redText">{reds}</span> -{" "}
             <span id="blueText">{blues}</span>
           </p>
+          <p>{turn ? win ? "Red Wins" : "Red's Turn" : win ? "Blue Wins" :"Blue's Turn"}</p>
+          <button onClick={() => setTurn(!turn)}>End Turn</button>
         </div>
         <div>{post}</div>
       </main>
 
       <footer>
         <div>
-          <button>Player</button>
-          <button>Spymaster</button>
-          <button onClick={() => setState(arr)}>Next game</button>
+          <button onClick={() => setView(false)}>Player</button>
+          <button onClick={() => setView(true)}>Spymaster</button>
+          <button
+            onClick={() => {
+              setState(arr);
+              setTurn(!turn);
+              setWin(false);
+            }}
+          >
+            Next game
+          </button>
         </div>
       </footer>
     </>

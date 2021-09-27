@@ -34,6 +34,18 @@ footer div {
   color: white;
 }
 
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.info button {
+  height: 20px;
+}
+
 #gray {
   background-color: black;
 }
@@ -71,6 +83,7 @@ footer div {
 }
 
 #blackgray {
+  outline: 4px solid #000;
   background-color: #e8e8e8;
   color: black;
 }
