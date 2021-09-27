@@ -1,6 +1,7 @@
 import { Card } from "./component/Card";
 import { shuffle } from "./utils/shuffle";
 import { useState } from "react";
+import { generateWords } from "./utils/generateWords";
 const words = [
   "Acne",
   "Acre",
@@ -681,22 +682,7 @@ function App(): JSX.Element {
   const [win, setWin] = useState<boolean>(false);
   const [turn, setTurn] = useState<boolean>(false);
   const [overview, setView] = useState<boolean>(false);
-  const arr = shuffle(
-    Array.from({ length: 25 }, (element, index) => [
-      words[Math.floor(Math.random() * words.length)],
-      index < 7
-        ? "blackblack"
-        : index < 15
-        ? "blackred"
-        : index < 23
-        ? "blackblue"
-        : index < 24
-        ? "blackgray"
-        : !turn
-        ? "blackred"
-        : "blackblue",
-    ])
-  );
+  const arr = shuffle(generateWords(words,turn));
   const [state, setState] = useState<string[][]>(arr);
 
   const post = state.map((element, index) => (
