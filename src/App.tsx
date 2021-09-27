@@ -682,7 +682,7 @@ function App(): JSX.Element {
   const [win, setWin] = useState<boolean>(false);
   const [turn, setTurn] = useState<boolean>(false);
   const [overview, setView] = useState<boolean>(false);
-  const arr = shuffle(generateWords(words,turn));
+  const arr = shuffle(generateWords(words, turn));
   const [state, setState] = useState<string[][]>(arr);
 
   const post = state.map((element, index) => (
@@ -691,8 +691,8 @@ function App(): JSX.Element {
       data={state}
       turn={turn}
       overview={overview}
-      win = {win}
-      setWin = {(bool: boolean) => setWin(bool)}
+      win={win}
+      setWin={(bool: boolean) => setWin(bool)}
       setState={(arr: string[][]) => setState(arr)}
       setTurn={(bool: boolean) => setTurn(bool)}
       word={element[0]}
@@ -708,14 +708,22 @@ function App(): JSX.Element {
       <header>
         <h1>CODENAMES</h1>
       </header>
-      
+
       <main>
         <div className="info">
           <p>
             <span id="redText">{reds}</span> -{" "}
             <span id="blueText">{blues}</span>
           </p>
-          <p>{turn ? win ? "Red Wins" : "Red's Turn" : win ? "Blue Wins" :"Blue's Turn"}</p>
+          <p>
+            {turn
+              ? win
+                ? "Red Wins"
+                : "Red's Turn"
+              : win
+              ? "Blue Wins"
+              : "Blue's Turn"}
+          </p>
           <button onClick={() => setTurn(!turn)}>End Turn</button>
         </div>
         <div>{post}</div>
