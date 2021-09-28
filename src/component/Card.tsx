@@ -1,40 +1,42 @@
 interface Word {
   word: string;
   color: string;
-  data: string[][];
+  boardState: string[][];
   turn: boolean;
   overview: boolean;
   win: boolean;
   setWin(bool: boolean): void;
   setTurn(bool: boolean): void;
-  setState(arr: string[][]): void;
+  setBoardState(arr: string[][]): void;
 }
 
 export function Card({
   word,
   color,
-  data,
+  boardState,
   turn,
   overview,
   win,
   setWin,
   setTurn,
-  setState,
+  setBoardState,
 }: Word): JSX.Element {
   const handleClick = () => {
-    const idx = data.findIndex((element) => element[0] === word);
-    data[idx][1] =
-      data[idx][1].length > 5 ? data[idx][1].slice(5) : data[idx][1];
-    setState([...data]);
+    const cardIndex = boardState.findIndex((element) => element[0] === word);
+    const selectedCard = boardState[cardIndex];
+    const newCardValue = selectedCard[1].length > 5 ? selectedCard[1].slice(5) : selectedCard[1];
+    selectedCard[1] = newCardValue;
+      
+    setBoardState([...boardState]);
 
     if (color === "blackgray") {
-      const dat = [...data];
+      const dat = [...boardState];
       dat.forEach(
         (element, index) =>
           (dat[index][1] =
             element[1].length > 5 ? element[1].slice(5) : element[1])
       );
-      setState([...dat]);
+      setBoardState([...dat]);
       console.log(win, color, dat);
       setWin(true);
     }
