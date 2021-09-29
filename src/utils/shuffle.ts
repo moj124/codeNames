@@ -1,4 +1,6 @@
-export function shuffle(array: string[][]): string[][] {
+export function shuffle(
+  array: { word: string; color: string; ishidden: boolean }[]
+): { word: string; color: string; ishidden: boolean }[] {
   let currentIndex = array.length,
     randomIndex;
 

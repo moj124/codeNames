@@ -1,4 +1,7 @@
-export function generateWords(words: string[], turn: boolean): string[][] {
+export function generateWords(
+  words: string[],
+  turn: boolean
+): { word: string; color: string; ishidden: boolean }[] {
   const arr: string[] = [];
 
   while (arr.length < 25) {
@@ -8,18 +11,25 @@ export function generateWords(words: string[], turn: boolean): string[][] {
     }
   }
 
-  return arr.map((element, index) => [
-    element,
-    index < 7
-      ? "blackblack"
-      : index < 15
-      ? "blackred"
-      : index < 23
-      ? "blackblue"
-      : index < 24
-      ? "blackgray"
-      : !turn
-      ? "blackred"
-      : "blackblue",
-  ]);
+  return arr.map((element, index) => {
+    const newObj: { word: string; color: string; ishidden: boolean } = {
+      word: "",
+      color: "",
+      ishidden: true,
+    };
+    newObj.word = element;
+    newObj.color =
+      index < 7
+        ? "black"
+        : index < 15
+        ? "red"
+        : index < 23
+        ? "blue"
+        : index < 24
+        ? "gray"
+        : !turn
+        ? "red"
+        : "blue";
+    return newObj;
+  });
 }

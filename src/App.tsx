@@ -4,31 +4,41 @@ import { useState } from "react";
 import { generateWords } from "./utils/generateWords";
 import { words } from "./words.json";
 
+export interface Word {
+  word: string;
+  color: string;
+  ishidden: boolean;
+}
+
 function App(): JSX.Element {
   const [win, setWin] = useState<boolean>(false);
   const [turn, setTurn] = useState<boolean>(false);
   const [overview, setView] = useState<boolean>(false);
-  const gameWords = shuffle(generateWords(words, turn));
-  const [boardState, setBoardState] = useState<string[][]>(gameWords);
+  const [boardState, setBoardState] = useState<Word[]>(
+    shuffle(generateWords(words, turn))
+  );
 
+  const gameWords = shuffle(generateWords(words, turn));
   const post = boardState.map((element, index) => (
     <Card
       key={index}
+      color={element.color}
+      word={element.word}
       boardState={boardState}
-      turn={turn}
       overview={overview}
       win={win}
-      setWin={(bool: boolean) => setWin(bool)}
-      setBoardState={(arr: string[][]) => setBoardState(arr)}
-      setTurn={(bool: boolean) => setTurn(bool)}
-      word={element[0]}
-      color={element[1]}
+      turn={turn}
+      setBoardState={(cards: Word[]) => setBoardState(cards)}
+      setTurn={(turn: boolean) => setTurn(turn)}
+      setWin={(win: boolean) => setWin(win)}
     />
   ));
 
-  const reds = boardState.filter((element) => element[1] === "blackred").length;
+  const reds = boardState.filter(
+    (element) => element.ishidden === true && element.color === "red"
+  ).length;
   const blues = boardState.filter(
-    (element) => element[1] === "blackblue"
+    (element) => element.color === "blue" && element.ishidden === true
   ).length;
 
   return (
@@ -63,9 +73,9 @@ function App(): JSX.Element {
           <button onClick={() => setView(true)}>Spymaster</button>
           <button
             onClick={() => {
-              setBoardState(gameWords);
               setTurn(!turn);
               setWin(false);
+              setBoardState(gameWords);
             }}
           >
             Next game

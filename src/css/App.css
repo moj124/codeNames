@@ -50,48 +50,6 @@ footer div {
   height: 20px;
 }
 
-#gray {
-  background-color: black;
-}
-
-#red {
-  background-color: #d13030;
-}
-
-#blue {
-  background-color: #5786cf;
-}
-
-#black {
-  background-color: #ede2cc;
-  color: black;
-}
-
-#blackred {
-  background-color: #e8e8e8;
-  color: #d13030;
-}
-
-#blackblue {
-  background-color: #e8e8e8;
-  color: #5786cf;
-}
-
-#blackblue {
-  background-color: #e8e8e8;
-}
-
-#blackblack {
-  background-color: #e8e8e8;
-  color: black;
-}
-
-#blackgray {
-  outline: 4px solid #000;
-  background-color: #e8e8e8;
-  color: black;
-}
-
 #redText {
   color: #d13030;
 }
@@ -99,3 +57,5 @@ footer div {
 #blueText {
   color: #5786cf;
 }
+
+

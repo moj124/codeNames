@@ -1,63 +1,62 @@
-interface Word {
-  word: string;
+import { Word } from "../App";
+import styles from "./Card.module.css";
+interface Props {
   color: string;
-  boardState: string[][];
+  word: string;
+  boardState: Word[];
   turn: boolean;
   overview: boolean;
   win: boolean;
   setWin(bool: boolean): void;
   setTurn(bool: boolean): void;
-  setBoardState(arr: string[][]): void;
+  setBoardState(arr: Word[]): void;
 }
 
 export function Card({
-  word,
   color,
+  word,
   boardState,
-  turn,
   overview,
+  turn,
   win,
   setWin,
   setTurn,
   setBoardState,
-}: Word): JSX.Element {
+}: Props): JSX.Element {
   const handleClick = () => {
-    const cardIndex = boardState.findIndex((element) => element[0] === word);
+    const cardIndex = boardState.findIndex((element) => element.word === word);
     const selectedCard = boardState[cardIndex];
-    const newCardValue = selectedCard[1].length > 5 ? selectedCard[1].slice(5) : selectedCard[1];
-    selectedCard[1] = newCardValue;
-      
+    selectedCard.ishidden = false;
+
     setBoardState([...boardState]);
 
-    if (color === "blackgray") {
+    if (color === "gray") {
       const dat = [...boardState];
-      dat.forEach(
-        (element, index) =>
-          (dat[index][1] =
-            element[1].length > 5 ? element[1].slice(5) : element[1])
-      );
+      dat.forEach((element, index) => (element.ishidden = false));
       setBoardState([...dat]);
       console.log(win, color, dat);
       setWin(true);
     }
-    if (turn && color.length > 5) {
-      setTurn(!turn);
-    } else if (!turn && color.length > 5) {
+    if ((turn && color === "blue") || (!turn && color === "red")) {
       setTurn(!turn);
     }
   };
 
   return (
     <>
-      {overview || color.length <= 5 ? (
-        <button className="card" id={color} onClick={handleClick}>
-          {word}
-        </button>
-      ) : (
-        <button className="card" id="blackblack" onClick={handleClick}>
-          {word}
-        </button>
-      )}
+      <button
+        className={styles.card}
+        id={
+          boardState.find((element) => element.word === word)?.ishidden
+            ? overview
+              ? color === "red" ? styles.red : color === "blue" ? styles.blue : color === "gray" ? styles.gray : styles.black
+              : styles.blackblack
+            : color === "red" ? styles.red : color === "blue" ? styles.blue : color === "gray" ? styles.gray : styles.black
+        }
+        onClick={handleClick}
+      >
+        {word}
+      </button>
     </>
   );
 }

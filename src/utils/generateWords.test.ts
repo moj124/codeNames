@@ -149,7 +149,7 @@ test("generateWords returns a unique list of 25 words, turn passed to determine 
         "32fwsdca",
       ],
       false
-    ).filter((element) => element[1] === "blackred").length
+    ).filter((element) => element.color === "red").length
   ).toEqual(9);
   expect(
     generateWords(
@@ -199,7 +199,7 @@ test("generateWords returns a unique list of 25 words, turn passed to determine 
         "32fwsdca",
       ],
       false
-    ).filter((element) => element[1] === "blackblue").length
+    ).filter((element) => element.color === "blue").length
   ).toEqual(8);
   expect(
     generateWords(
@@ -249,7 +249,7 @@ test("generateWords returns a unique list of 25 words, turn passed to determine 
         "32fwsdca",
       ],
       true
-    ).filter((element) => element[1] === "blackred").length
+    ).filter((element) => element.color === "red").length
   ).toEqual(8);
   expect(
     generateWords(
@@ -299,6 +299,6 @@ test("generateWords returns a unique list of 25 words, turn passed to determine 
         "32fwsdca",
       ],
       true
-    ).filter((element) => element[1] === "blackblue").length
+    ).filter((element) => element.color === "blue").length
   ).toEqual(9);
 });
