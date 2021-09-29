@@ -49,9 +49,21 @@ export function Card({
         id={
           boardState.find((element) => element.word === word)?.ishidden
             ? overview
-              ? color === "red" ? styles.red : color === "blue" ? styles.blue : color === "gray" ? styles.gray : styles.black
+              ? color === "red"
+                ? styles.blackred
+                : color === "blue"
+                ? styles.blackblue
+                : color === "gray"
+                ? styles.blackgray
+                : styles.blackblack
               : styles.blackblack
-            : color === "red" ? styles.red : color === "blue" ? styles.blue : color === "gray" ? styles.gray : styles.black
+            : color === "red"
+            ? styles.red
+            : color === "blue"
+            ? styles.blue
+            : color === "gray"
+            ? styles.gray
+            : styles.black
         }
         onClick={handleClick}
       >
