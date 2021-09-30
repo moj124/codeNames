@@ -3,13 +3,7 @@ import { shuffle } from "./utils/shuffle";
 import { useState } from "react";
 import { generateWords } from "./utils/generateWords";
 import { words } from "./words.json";
-
-export interface Word {
-  word: string;
-  color: string;
-  ishidden: boolean;
-}
-
+import { Word } from "./types/Word";
 function App(): JSX.Element {
   const [win, setWin] = useState<boolean>(false);
   const [turn, setTurn] = useState<boolean>(false);
@@ -19,18 +13,34 @@ function App(): JSX.Element {
   );
 
   const gameWords = shuffle(generateWords(words, turn));
+
+  const handleClick = (word: string, color: string) => {
+    if (color === "gray") {
+      const dat = [...boardState];
+      dat.forEach((element, index) => (element.ishidden = false));
+      setBoardState([...dat]);
+      setWin(true);
+    } else {
+      const cardIndex = boardState.findIndex(
+        (element) => element.word === word
+      );
+      const selectedCard = boardState[cardIndex];
+      selectedCard.ishidden = false;
+
+      setBoardState([...boardState]);
+    }
+
+    if ((turn && color === "blue") || (!turn && color === "red")) {
+      setTurn(!turn);
+    }
+  };
+
   const post = boardState.map((element, index) => (
     <Card
       key={index}
-      color={element.color}
-      word={element.word}
-      boardState={boardState}
+      word={element}
       overview={overview}
-      win={win}
-      turn={turn}
-      setBoardState={(cards: Word[]) => setBoardState(cards)}
-      setTurn={(turn: boolean) => setTurn(turn)}
-      setWin={(win: boolean) => setWin(win)}
+      handleClick={() => handleClick(element.word, element.color)}
     />
   ));
 

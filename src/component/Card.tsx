@@ -1,67 +1,32 @@
-import { Word } from "../App";
+import { Word } from "../types/Word";
 import styles from "./Card.module.css";
 interface Props {
-  color: string;
-  word: string;
-  boardState: Word[];
-  turn: boolean;
+  word: Word;
   overview: boolean;
-  win: boolean;
-  setWin(bool: boolean): void;
-  setTurn(bool: boolean): void;
-  setBoardState(arr: Word[]): void;
+  handleClick(): void;
 }
 
-export function Card({
-  color,
-  word,
-  boardState,
-  overview,
-  turn,
-  win,
-  setWin,
-  setTurn,
-  setBoardState,
-}: Props): JSX.Element {
-  const handleClick = () => {
-    const cardIndex = boardState.findIndex((element) => element.word === word);
-    const selectedCard = boardState[cardIndex];
-    selectedCard.ishidden = false;
-
-    setBoardState([...boardState]);
-
-    if (color === "gray") {
-      const dat = [...boardState];
-      dat.forEach((element, index) => (element.ishidden = false));
-      setBoardState([...dat]);
-      console.log(win, color, dat);
-      setWin(true);
-    }
-    if ((turn && color === "blue") || (!turn && color === "red")) {
-      setTurn(!turn);
-    }
-  };
-
+export function Card({ word, overview, handleClick }: Props): JSX.Element {
   return (
     <>
       <button
         className={styles.card}
         id={
-          boardState.find((element) => element.word === word)?.ishidden
+          word.ishidden
             ? overview
-              ? color === "red"
+              ? word.color === "red"
                 ? styles.blackred
-                : color === "blue"
+                : word.color === "blue"
                 ? styles.blackblue
-                : color === "gray"
+                : word.color === "gray"
                 ? styles.blackgray
                 : styles.blackblack
               : styles.blackblack
-            : color === "red"
+            : word.color === "red"
             ? styles.red
-            : color === "blue"
+            : word.color === "blue"
             ? styles.blue
-            : color === "gray"
+            : word.color === "gray"
             ? styles.gray
             : styles.black
         }
