@@ -2,7 +2,6 @@ import { shuffle } from "./utils/shuffle";
 import { generateWords } from "./utils/generateWords";
 import { words } from "./words.json";
 import { Card } from "./component/Card";
-// @ts-ignore
 import { useState } from "react";
 import { Color } from "./types/Color";
 import { Word } from "./types/Word";
