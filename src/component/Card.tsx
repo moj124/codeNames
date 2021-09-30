@@ -1,32 +1,41 @@
-import { Word } from "../types/Word";
 import styles from "./Card.module.css";
+import { Color } from "../types/Color";
+
 interface Props {
-  word: Word;
+  color: string;
+  word: string;
+  ishidden: boolean;
   overview: boolean;
   handleClick(): void;
 }
 
-export function Card({ word, overview, handleClick }: Props): JSX.Element {
+export function Card({
+  color,
+  word,
+  ishidden,
+  overview,
+  handleClick,
+}: Props): JSX.Element {
   return (
     <>
       <button
         className={styles.card}
         id={
-          word.ishidden
+          ishidden
             ? overview
-              ? word.color === "red"
+              ? color === Color.Red
                 ? styles.blackred
-                : word.color === "blue"
+                : color === Color.Blue
                 ? styles.blackblue
-                : word.color === "gray"
+                : color === Color.Gray
                 ? styles.blackgray
                 : styles.blackblack
               : styles.blackblack
-            : word.color === "red"
+            : color === Color.Red
             ? styles.red
-            : word.color === "blue"
+            : color === Color.Blue
             ? styles.blue
-            : word.color === "gray"
+            : color === Color.Gray
             ? styles.gray
             : styles.black
         }

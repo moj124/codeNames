@@ -1,8 +1,9 @@
-import { Card } from "./component/Card";
 import { shuffle } from "./utils/shuffle";
-import { useState } from "react";
 import { generateWords } from "./utils/generateWords";
 import { words } from "./words.json";
+import { Card } from "./component/Card";
+import { useState } from "react";
+import { Color } from "./types/Color";
 import { Word } from "./types/Word";
 function App(): JSX.Element {
   const [win, setWin] = useState<boolean>(false);
@@ -14,10 +15,10 @@ function App(): JSX.Element {
 
   const gameWords = shuffle(generateWords(words, turn));
 
-  const handleClick = (word: string, color: string) => {
-    if (color === "gray") {
+  const handleClick = (word: string, color: Color) => {
+    if (color === Color.Gray) {
       const dat = [...boardState];
-      dat.forEach((element, index) => (element.ishidden = false));
+      dat.forEach((element) => (element.ishidden = false));
       setBoardState([...dat]);
       setWin(true);
     } else {
@@ -30,7 +31,7 @@ function App(): JSX.Element {
       setBoardState([...boardState]);
     }
 
-    if ((turn && color === "blue") || (!turn && color === "red")) {
+    if ((turn && color === Color.Blue) || (!turn && color === Color.Red)) {
       setTurn(!turn);
     }
   };
@@ -38,17 +39,19 @@ function App(): JSX.Element {
   const post = boardState.map((element, index) => (
     <Card
       key={index}
-      word={element}
+      color={element.color}
+      word={element.word}
+      ishidden={element.ishidden}
       overview={overview}
       handleClick={() => handleClick(element.word, element.color)}
     />
   ));
 
   const reds = boardState.filter(
-    (element) => element.ishidden === true && element.color === "red"
+    (element) => element.ishidden === true && element.color === Color.Red
   ).length;
   const blues = boardState.filter(
-    (element) => element.color === "blue" && element.ishidden === true
+    (element) => element.color === Color.Blue && element.ishidden === true
   ).length;
 
   return (
@@ -72,7 +75,9 @@ function App(): JSX.Element {
               ? "Blue Wins"
               : "Blue's Turn"}
           </p>
-          <button onClick={() => setTurn(!turn)}>End Turn</button>
+          <button onClick={() => setTurn(!turn)} disabled={win}>
+            End Turn
+          </button>
         </div>
         <div>{post}</div>
       </main>

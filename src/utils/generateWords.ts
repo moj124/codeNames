@@ -1,7 +1,8 @@
+import { Color } from "../types/Color";
 export function generateWords(
   words: string[],
   turn: boolean
-): { word: string; color: string; ishidden: boolean }[] {
+): { word: string; color: Color; ishidden: boolean }[] {
   const arr: string[] = [];
 
   while (arr.length < 25) {
@@ -12,24 +13,24 @@ export function generateWords(
   }
 
   return arr.map((element, index) => {
-    const newObj: { word: string; color: string; ishidden: boolean } = {
+    const newObj: { word: string; color: Color; ishidden: boolean } = {
       word: "",
-      color: "",
+      color: Color.Black,
       ishidden: true,
     };
     newObj.word = element;
     newObj.color =
       index < 7
-        ? "black"
+        ? Color.Black
         : index < 15
-        ? "red"
+        ? Color.Red
         : index < 23
-        ? "blue"
+        ? Color.Blue
         : index < 24
-        ? "gray"
+        ? Color.Gray
         : !turn
-        ? "red"
-        : "blue";
+        ? Color.Red
+        : Color.Blue;
     return newObj;
   });
 }
