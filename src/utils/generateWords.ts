@@ -1,9 +1,9 @@
 import { Color } from "../types/Color";
 export function generateWords(
-  words: string[],
+  words: { word_id: number; word: string;}[],
   turn: boolean
-): { word: string; color: Color; ishidden: boolean }[] {
-  const arr: string[] = [];
+): { word_id: number; word: string; color: Color; ishidden: boolean }[] {
+  const arr: { word_id: number; word: string;}[] = [];
 
   while (arr.length < 25) {
     const idx = Math.floor(Math.random() * words.length);
@@ -13,12 +13,14 @@ export function generateWords(
   }
 
   return arr.map((element, index) => {
-    const newObj: { word: string; color: Color; ishidden: boolean } = {
+    const newObj: { word_id: number; word: string; color: Color; ishidden: boolean } = {
+      word_id: 0,
       word: "",
       color: Color.Black,
       ishidden: true,
     };
-    newObj.word = element;
+    newObj.word_id = element.word_id;
+    newObj.word = element.word;
     newObj.color =
       index < 7
         ? Color.Black

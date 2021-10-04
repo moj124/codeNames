@@ -1,19 +1,31 @@
 import { shuffle } from "./utils/shuffle";
 import { generateWords } from "./utils/generateWords";
-import { words } from "./words.json";
 import { Card } from "./component/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Color } from "./types/Color";
 import { Word } from "./types/Word";
-function App(): JSX.Element {
+
+interface SessionDetails{
+  session: string;
+}
+
+function App({session}:SessionDetails): JSX.Element {
   const [win, setWin] = useState<boolean>(false);
   const [turn, setTurn] = useState<boolean>(false);
   const [overview, setView] = useState<boolean>(false);
-  const [boardState, setBoardState] = useState<Word[]>(
-    shuffle(generateWords(words, turn))
-  );
+  const [boardState, setBoardState] = useState<Word[]>([]);
 
-  const gameWords = shuffle(generateWords(words, turn));
+  useEffect( () => {
+    const fetchWords = async () =>{
+      const res = await fetch(
+        `https://nameless-earth-29523.herokuapp.com/${session}`
+      );
+      setBoardState(await res.json());
+    }
+    fetchWords();
+  },[win]);
+
+  // const gameWords = shuffle(generateWords(words, turn));
 
   const handleClick = (word: string, color: Color) => {
     if (color === Color.Gray) {
@@ -90,7 +102,7 @@ function App(): JSX.Element {
             onClick={() => {
               setTurn(!turn);
               setWin(false);
-              setBoardState(gameWords);
+              // setBoardState(gameWords);
             }}
           >
             Next game
