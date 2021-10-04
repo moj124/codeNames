@@ -1,52 +1,27 @@
-import { generateWords } from "../utils/generateWords";
-import { shuffle } from "../utils/shuffle";
 import styles from "./Home.module.css";
+import { BrowserRouter as Router, useHistory } from "react-router-dom";
+export function Home(): JSX.Element {
+  const history = useHistory();
+  const handleClick = async () => {
+    const res = await fetch(
+      `https://nameless-earth-29523.herokuapp.com/generateSession`
+    );
+    const { session } = await res.json();
+    history.push(`/game/${session}`);
+    // console.log(await res.json())
+  };
 
-export function Home(): JSX.Element{
-    const handleClick = async () => {
-        // e.preventDefault();
-
-
-
-        const res = await fetch(
-            `https://nameless-earth-29523.herokuapp.com/generateSession`
-          );
-        const{ session } = await res.json();
-        console.log(session);
-        // fetch("https://nameless-earth-29523.herokuapp.com/", {
-        //   method: "POST",
-        //   headers: {
-        //     Accept: "application/json",
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     // word_id: id
-        //     // word: word,
-        //     // color: color,
-        //     // ishidden: ishidden
-        //   }),
-        // })
-        //   .then((response) => response.json())
-        //   .then((data) => {
-        //     console.log("Success:", data);
-        //     // window.location.reload();
-        //   })
-        //   .catch((error) => {
-        //     console.error("Error:", error);
-        //   });
-    }
-
-    return(
+  return (
     <>
       <header>
         <h1>CODENAMES</h1>
       </header>
       <main>
-        <button onClick={handleClick}>Start</button>
+        <Router>
+          <button onClick={handleClick}>Start Game</button>
+        </Router>
       </main>
-      <footer>
-
-      </footer>
+      <footer></footer>
     </>
-    );
+  );
 }
