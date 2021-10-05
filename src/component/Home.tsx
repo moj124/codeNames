@@ -1,4 +1,4 @@
-import styles from "./Home.module.css";
+// import styles from "./Home.module.css";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 export function Home(): JSX.Element {
   const history = useHistory();
