@@ -1,24 +1,68 @@
-import { shuffle } from "./utils/shuffle";
-import { generateWords } from "./utils/generateWords";
-import { words } from "./words.json";
 import { Card } from "./component/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useInterval from "./utils/useInterval";
 import { Color } from "./types/Color";
 import { Word } from "./types/Word";
-function App(): JSX.Element {
+
+interface SessionDetails {
+  session: string;
+}
+
+function App({ session }: SessionDetails): JSX.Element {
   const [win, setWin] = useState<boolean>(false);
-  const [turn, setTurn] = useState<boolean>(false);
+  const [turn, setTurn] = useState<boolean>(true);
   const [overview, setView] = useState<boolean>(false);
-  const [boardState, setBoardState] = useState<Word[]>(
-    shuffle(generateWords(words, turn))
-  );
+  const [boardState, setBoardState] = useState<Word[]>([]);
 
-  const gameWords = shuffle(generateWords(words, turn));
+  useInterval(() => {
+    const fetchWords = async () => {
+      const res = await fetch(
+        `https://nameless-earth-29523.herokuapp.com/game/${session}`
+      );
+      const words = await res.json();
+      setBoardState(words.data);
+    };
+    fetchWords();
+  }, 1000);
 
-  const handleClick = (word: string, color: Color) => {
+  useEffect(() => {
+    const fetchWords = async () => {
+      const res = await fetch(
+        `https://nameless-earth-29523.herokuapp.com/game/${session}`
+      );
+      const words = await res.json();
+      setBoardState(words.data);
+    };
+    fetchWords();
+  }, [session]);
+
+  const handleWin = async () => {
+    setTurn(true);
+    setWin(false);
+    const res = await fetch(
+      `https://nameless-earth-29523.herokuapp.com/game/${session}/next`
+    );
+    const words = await res.json();
+    setBoardState(words.data);
+  };
+
+  const handleClick = async (word_id: number, word: string, color: Color) => {
     if (color === Color.Gray) {
       const dat = [...boardState];
       dat.forEach((element) => (element.ishidden = false));
+
+      await fetch(
+        `https://nameless-earth-29523.herokuapp.com/game/${session}`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dat),
+        }
+      );
+
       setBoardState([...dat]);
       setWin(true);
     } else {
@@ -27,7 +71,17 @@ function App(): JSX.Element {
       );
       const selectedCard = boardState[cardIndex];
       selectedCard.ishidden = false;
-
+      await fetch(
+        `https://nameless-earth-29523.herokuapp.com/game/${session}`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify([{ word_id, word, color, ishidden: false }]),
+        }
+      );
       setBoardState([...boardState]);
     }
 
@@ -43,7 +97,9 @@ function App(): JSX.Element {
       word={element.word}
       ishidden={element.ishidden}
       overview={overview}
-      handleClick={() => handleClick(element.word, element.color)}
+      handleClick={() =>
+        handleClick(element.word_id, element.word, element.color)
+      }
     />
   ));
 
@@ -86,15 +142,7 @@ function App(): JSX.Element {
         <div>
           <button onClick={() => setView(false)}>Player</button>
           <button onClick={() => setView(true)}>Spymaster</button>
-          <button
-            onClick={() => {
-              setTurn(!turn);
-              setWin(false);
-              setBoardState(gameWords);
-            }}
-          >
-            Next game
-          </button>
+          <button onClick={handleWin}>Next game</button>
         </div>
       </footer>
     </>
