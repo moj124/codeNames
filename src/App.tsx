@@ -1,4 +1,5 @@
 import { Card } from "./component/Card";
+
 import { useState, useEffect } from "react";
 import useInterval from "./utils/useInterval";
 import { Color } from "./types/Color";
@@ -13,81 +14,94 @@ function App({ session }: SessionDetails): JSX.Element {
   const [turn, setTurn] = useState<boolean>(true);
   const [overview, setView] = useState<boolean>(false);
   const [boardState, setBoardState] = useState<Word[]>([]);
-
   useInterval(() => {
     const fetchWords = async () => {
-      const res = await fetch(
-        `https://nameless-earth-29523.herokuapp.com/game/${session}`
-      );
+      const res = await fetch(`${process.env.REACT_APP_API}/game/${session}`);
       const words = await res.json();
+      console.log(words);
       setBoardState(words.data);
+      setTurn(words.turn);
     };
     fetchWords();
-  }, 1000);
+  }, 2000);
 
   useEffect(() => {
     const fetchWords = async () => {
-      const res = await fetch(
-        `https://nameless-earth-29523.herokuapp.com/game/${session}`
-      );
+      const res = await fetch(`${process.env.REACT_APP_API}/game/${session}`);
       const words = await res.json();
       setBoardState(words.data);
+      setTurn(words.turn);
     };
     fetchWords();
   }, [session]);
 
   const handleWin = async () => {
-    setTurn(true);
-    setWin(false);
     const res = await fetch(
-      `https://nameless-earth-29523.herokuapp.com/game/${session}/next`
+      `${process.env.REACT_APP_API}/game/${session}/next`
     );
     const words = await res.json();
     setBoardState(words.data);
+    setTurn(words.turn);
+    setWin(false);
   };
 
-  const handleClick = async (word_id: number, word: string, color: Color) => {
-    if (color === Color.Gray) {
-      const dat = [...boardState];
-      dat.forEach((element) => (element.ishidden = false));
-
-      await fetch(
-        `https://nameless-earth-29523.herokuapp.com/game/${session}`,
-        {
+  const handleClick = async (
+    word_id: number,
+    word: string,
+    color: Color,
+    ishidden: boolean
+  ) => {
+    if (ishidden) {
+      if ((turn && color === Color.Blue) || (!turn && color === Color.Red)) {
+        setTurn(!turn);
+      }
+      if (color === Color.Gray) {
+        const dat = [...boardState];
+        dat.forEach((element) => (element.ishidden = false));
+        await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
           method: "PUT",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(dat),
-        }
-      );
+          body: JSON.stringify([turn, dat]),
+        });
 
-      setBoardState([...dat]);
-      setWin(true);
-    } else {
-      const cardIndex = boardState.findIndex(
-        (element) => element.word === word
-      );
-      const selectedCard = boardState[cardIndex];
-      selectedCard.ishidden = false;
-      await fetch(
-        `https://nameless-earth-29523.herokuapp.com/game/${session}`,
-        {
+        setBoardState([...dat]);
+        setTurn(!turn);
+        setWin(true);
+      } else {
+        const cardIndex = boardState.findIndex(
+          (element) => element.word === word
+        );
+        const selectedCard = boardState[cardIndex];
+        selectedCard.ishidden = false;
+        await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
           method: "PUT",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify([{ word_id, word, color, ishidden: false }]),
-        }
-      );
-      setBoardState([...boardState]);
+          body: JSON.stringify([
+            turn,
+            [{ word_id: word_id, word: word, color: color, ishidden: false }],
+          ]),
+        });
+        setBoardState([...boardState]);
+      }
     }
+  };
 
-    if ((turn && color === Color.Blue) || (!turn && color === Color.Red)) {
-      setTurn(!turn);
-    }
+  const handleTurn = async () => {
+    setTurn(!turn);
+    await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([turn]),
+    });
   };
 
   const post = boardState.map((element, index) => (
@@ -98,7 +112,12 @@ function App({ session }: SessionDetails): JSX.Element {
       ishidden={element.ishidden}
       overview={overview}
       handleClick={() =>
-        handleClick(element.word_id, element.word, element.color)
+        handleClick(
+          element.word_id,
+          element.word,
+          element.color,
+          element.ishidden
+        )
       }
     />
   ));
@@ -131,7 +150,7 @@ function App({ session }: SessionDetails): JSX.Element {
               ? "Blue Wins"
               : "Blue's Turn"}
           </p>
-          <button onClick={() => setTurn(!turn)} disabled={win}>
+          <button onClick={handleTurn} disabled={win}>
             End Turn
           </button>
         </div>
