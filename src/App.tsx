@@ -1,5 +1,4 @@
 import { Card } from "./component/Card";
-
 import { useState, useEffect } from "react";
 import useInterval from "./utils/useInterval";
 import { Color } from "./types/Color";

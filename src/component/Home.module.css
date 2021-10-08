@@ -1,3 +1,13 @@
-header {
+.home_header {
   text-align: center;
+  height: 200px;
+}
+
+main {
+  text-align: center;
+}
+
+.start_button {
+  height: 70px;
+  font-size: large;
 }
