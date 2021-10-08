@@ -51,30 +51,32 @@ function App({ session }: SessionDetails): JSX.Element {
     ishidden: boolean
   ) => {
     if (ishidden) {
-      if ((turn && color === Color.Blue) || (!turn && color === Color.Red)) {
+      if ((turn && color === Color.Blue) || (!turn && color === Color.Red) || Color.Gray === color) {
         setTurn(!turn);
       }
       if (color === Color.Gray) {
         const dat = [...boardState];
         dat.forEach((element) => (element.ishidden = false));
+        setBoardState([...dat]);
+        // setTurn(turn);
+        setWin(true);
         await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
           method: "PUT",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify([turn, dat]),
+          body: JSON.stringify([!turn, dat]),
         });
 
-        setBoardState([...dat]);
-        setTurn(!turn);
-        setWin(true);
+        
       } else {
         const cardIndex = boardState.findIndex(
           (element) => element.word === word
         );
         const selectedCard = boardState[cardIndex];
         selectedCard.ishidden = false;
+        setBoardState([...boardState]);
         await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
           method: "PUT",
           headers: {
@@ -86,7 +88,7 @@ function App({ session }: SessionDetails): JSX.Element {
             [{ word_id: word_id, word: word, color: color, ishidden: false }],
           ]),
         });
-        setBoardState([...boardState]);
+        
       }
     }
   };
@@ -99,8 +101,9 @@ function App({ session }: SessionDetails): JSX.Element {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify([turn]),
+      body: JSON.stringify([!turn]),
     });
+    
   };
 
   const post = boardState.map((element, index) => (

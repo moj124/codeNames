@@ -4,7 +4,7 @@ export function Home(): JSX.Element {
   const history = useHistory();
   const handleClick = async () => {
     const res = await fetch(
-      `https://nameless-earth-29523.herokuapp.com/generateSession`
+      `${process.env.REACT_APP_API}/generateSession`
     );
     const { session } = await res.json();
     history.push(`/game/${session}`);
