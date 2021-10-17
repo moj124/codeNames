@@ -50,15 +50,35 @@ function App({ session }: SessionDetails): JSX.Element {
     color: Color,
     ishidden: boolean
   ) => {
-    if (ishidden) {
-      if ((turn && color === Color.Blue) || (!turn && color === Color.Red) || Color.Gray === color) {
+    if (
+      boardState.filter(
+        (element) => element.ishidden === true && element.color === Color.Red
+      ).length === 0 &&
+      !win
+    ) {
+      setTurn(true);
+      setWin(true);
+    } else if (
+      boardState.filter(
+        (element) => element.ishidden === true && element.color === Color.Blue
+      ).length === 0 &&
+      !win
+    ) {
+      setTurn(false);
+      setWin(true);
+    }
+    if (ishidden && !win) {
+      if (
+        (turn && color === Color.Blue) ||
+        (!turn && color === Color.Red) ||
+        Color.Gray === color
+      ) {
         setTurn(!turn);
       }
       if (color === Color.Gray) {
         const dat = [...boardState];
         dat.forEach((element) => (element.ishidden = false));
         setBoardState([...dat]);
-        // setTurn(turn);
         setWin(true);
         await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
           method: "PUT",
@@ -68,8 +88,6 @@ function App({ session }: SessionDetails): JSX.Element {
           },
           body: JSON.stringify([!turn, dat]),
         });
-
-        
       } else {
         const cardIndex = boardState.findIndex(
           (element) => element.word === word
@@ -88,7 +106,6 @@ function App({ session }: SessionDetails): JSX.Element {
             [{ word_id: word_id, word: word, color: color, ishidden: false }],
           ]),
         });
-        
       }
     }
   };
@@ -103,7 +120,6 @@ function App({ session }: SessionDetails): JSX.Element {
       },
       body: JSON.stringify([!turn]),
     });
-    
   };
 
   const post = boardState.map((element, index) => (

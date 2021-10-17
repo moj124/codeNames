@@ -1,6 +1,7 @@
 .home_header {
-  text-align: center;
-  height: 200px;
+  margin: 0 auto; /* this will center the page */
+  width: 960px; /*  use your width here */
+  padding-bottom: 100px;
 }
 
 main {
@@ -8,6 +9,41 @@ main {
 }
 
 .start_button {
-  height: 70px;
+  height: 40px;
   font-size: large;
+}
+
+.content_head {
+}
+
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active,
+.collapsible:hover {
+  background-color: #555;
+}
+
+.hide_content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+}
+
+.viewable_content {
+  padding: 0 18px;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
 }
