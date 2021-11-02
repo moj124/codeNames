@@ -2,8 +2,26 @@ header {
   text-align: center;
 }
 
+.header-info{
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+button:hover{
+  opacity:0.8;
+}
+
+.red-text-info{
+  color:#d13030
+}
+
+.blue-text-info{
+  color: #5786cf;
+}
+
 body {
   height: 100%;
+  font-family: "Roboto Mono", monospace;
 }
 
 main div {
