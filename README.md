@@ -1,5 +1,41 @@
-# Simplified CRA starter
+# CODENAMES
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
+[View Website Live](https://codethatname.netlify.app/)
 
-> This is part of Academy's technical curriculum for **The Mark**. All parts of that curriculum, including this project, are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>
+- [Setup](#setup)
+  - [Mac OS](#mac os)
+  - [Linux](#linux)
+  - [Windows](#windows)
+- [Motivation](#motivation)
+- [Database](#database)
+- [Issues](#issues)
+
+## Setup
+
+### Mac OS
+```
+  brew install yarn
+  yarn
+  yarn start
+```
+
+### Linux
+```
+  curl -o- -L https://yarnpkg.com/install.sh | bash 
+  yarn
+  yarn start
+```
+
+### Windows
+```
+  npm install --global yarn
+  yarn
+  yarn start
+```
+
+## Database
+<p align="center"><img src="https://raw.githubusercontent.com/moj124/Filipages/master/media/filipage_database.png" width="50%"><p>
+
+## Motivation
+  
+## Issues
