@@ -17,7 +17,6 @@ function App({ session }: SessionDetails): JSX.Element {
     const fetchWords = async () => {
       const res = await fetch(`${process.env.REACT_APP_API}/game/${session}`);
       const words = await res.json();
-      // console.log(words);
       setBoardState(words.data);
       setTurn(words.turn);
     };
@@ -55,62 +54,63 @@ function App({ session }: SessionDetails): JSX.Element {
         (turn && color === Color.Blue) ||
         (!turn && color === Color.Red) ||
         Color.Gray === color
-        ) {
-          setTurn(!turn);
-        }
-        if (color === Color.Gray) {
-          const dat = [...boardState];
-          dat.forEach((element) => (element.ishidden = false));
-          setBoardState([...dat]);
-          setWin(true);
-          await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
-            method: "PUT",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify([!turn, dat]),
-          });
-        } else {
-          const cardIndex = boardState.findIndex(
-            (element) => element.word === word
-            );
-            const selectedCard = boardState[cardIndex];
-            selectedCard.ishidden = false;
-            setBoardState([...boardState]);
-            await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
-              method: "PUT",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify([
-                turn,
-                [{ word_id: word_id, word: word, color: color, ishidden: false }],
-              ]),
-            });
-          }
-          if (
-            boardState.filter(
-              (element) => element.ishidden === true && element.color === Color.Red
-              ).length === 0 &&
-              !win
-              ) {
-                console.log("Red Won")
-                setTurn(true);
-                setWin(true);
-              } else if (
-                boardState.filter(
-                  (element) => element.ishidden === true && element.color === Color.Blue
-                  ).length === 0 &&
-                  !win) {
-                    console.log("Blue Won")
-                    setTurn(false);
-                    setWin(true);
-        }
+      ) {
+        setTurn(!turn);
+      }
+      if (color === Color.Gray) {
+        const dat = [...boardState];
+        dat.forEach((element) => (element.ishidden = false));
+        setBoardState([...dat]);
+        setWin(true);
+        await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify([!turn, dat]),
+        });
+      } else {
+        const cardIndex = boardState.findIndex(
+          (element) => element.word === word
+        );
+        const selectedCard = boardState[cardIndex];
+        selectedCard.ishidden = false;
+        setBoardState([...boardState]);
+        await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify([
+            turn,
+            [{ word_id: word_id, word: word, color: color, ishidden: false }],
+          ]),
+        });
+      }
+      if (
+        boardState.filter(
+          (element) => element.ishidden === true && element.color === Color.Red
+        ).length === 0 &&
+        !win
+      ) {
+        console.log("Red Won");
+        setTurn(true);
+        setWin(true);
+      } else if (
+        boardState.filter(
+          (element) => element.ishidden === true && element.color === Color.Blue
+        ).length === 0 &&
+        !win
+      ) {
+        console.log("Blue Won");
+        setTurn(false);
+        setWin(true);
+      }
     }
   };
-  
+
   const handleTurn = async () => {
     setTurn(!turn);
     await fetch(`${process.env.REACT_APP_API}/game/${session}`, {
@@ -154,9 +154,13 @@ function App({ session }: SessionDetails): JSX.Element {
         <h1>CODENAMES</h1>
       </header>
 
-        {/* <a href={process.env.REACT_APP_API+'/'+session}> {process.env.REACT_APP_API+'/'+session}</a> */}
+      {/* <a href={process.env.REACT_APP_API+'/'+session}> {process.env.REACT_APP_API+'/'+session}</a> */}
       <div className="header-info">
-        <button onClick={()=>navigator.clipboard.writeText(window.location.href)}>Share Game Link</button>
+        <button
+          onClick={() => navigator.clipboard.writeText(window.location.href)}
+        >
+          Share Game Link
+        </button>
       </div>
       <main>
         <div className="info">
@@ -164,7 +168,7 @@ function App({ session }: SessionDetails): JSX.Element {
             <span id="redText">{reds}</span> -{" "}
             <span id="blueText">{blues}</span>
           </p>
-          <p className={turn ? "red-text-info":"blue-text-info"}>
+          <p className={turn ? "red-text-info" : "blue-text-info"}>
             {turn
               ? win
                 ? "Red Wins"

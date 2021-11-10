@@ -1,4 +1,4 @@
-import styles from "./Card.module.css";
+import styles from "../css/Card.module.css";
 import { Color } from "../types/Color";
 
 interface Props {

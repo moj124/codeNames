@@ -1,7 +1,6 @@
-import styles from "./Home.module.css";
+import styles from "../css/Home.module.css";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 export function Home(): JSX.Element {
-
   const history = useHistory();
   const handleClick = async () => {
     const res = await fetch(`${process.env.REACT_APP_API}/generateSession`);
