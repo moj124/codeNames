@@ -3,7 +3,7 @@
 [View Website Live](https://codethatname.netlify.app/)
 
 - [Setup](#setup)
-  - [Mac OS](#mac os)
+  - [Mac OS](#macos)
   - [Linux](#linux)
   - [Windows](#windows)
 - [Motivation](#motivation)
@@ -12,7 +12,7 @@
 
 ## Setup
 
-### Mac OS
+### MacOS
 ```
   brew install yarn
   yarn
