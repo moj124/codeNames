@@ -1,5 +1,5 @@
 # CODENAMES
-
+<p align="center"><img src="https://github.com/moj124/codeNames/blob/main/public/media/codenames.png" width="50%"><p>
 [View Website Live](https://codethatname.netlify.app/)
 
 - [Setup](#setup)
