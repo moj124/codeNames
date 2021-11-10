@@ -1,6 +1,6 @@
 # CODENAMES
 
-<p align="center"><img src="https://github.com/moj124/codeNames/blob/main/public/media/codenames.png" width="35%"><p>
+[<p align="center"><img src="https://github.com/moj124/codeNames/blob/main/public/media/codenames.png" width="35%"><p>](https://codethatname.netlify.app/)
     
 - [Setup](#setup)
   - [Mac OS](#macos)
@@ -11,10 +11,6 @@
 - [Database](#database)
 - [Issues](#issues)
   
-  
-  [View Website Live](https://codethatname.netlify.app/) : 
-  A remake clone of the game CODENAMES, where I loved the logic and style of the web application so I've recreated myself.
-
 ## Setup
 
 ### MacOS
