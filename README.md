@@ -1,19 +1,16 @@
 # CODENAMES
 
-<p align="center"><img src="https://github.com/moj124/codeNames/blob/main/public/media/codenames.png" width="35%"><p>
-  
-[View Website Live](https://codethatname.netlify.app/) : 
-  A remake clone of the game CODENAMES, where I loved the logic and style of the web application so I've recreated myself.
-
-  
+[<p align="center"><img src="https://github.com/moj124/codeNames/blob/main/public/media/codenames.png" width="35%"><p>](https://codethatname.netlify.app/)
+    
 - [Setup](#setup)
   - [Mac OS](#macos)
   - [Linux](#linux)
   - [Windows](#windows)
+- [Design](#design)
 - [Motivation](#motivation)
 - [Database](#database)
 - [Issues](#issues)
-
+  
 ## Setup
 
 ### MacOS
@@ -36,6 +33,10 @@
   yarn
   yarn start
 ```
+
+## Design    
+  [<img width="128" alt="Figma-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Figma-logo.svg/256px-Figma-logo.svg.png">](https://www.figma.com/file/hnKMmBN4bY7sR7eeuLC8Yz/Codenames?node-id=0%3A1)
+    Click the image if you want to view the figma design.
 
 ## Database
 <p align="center"><img src="https://github.com/moj124/codeNames/blob/main/public/media/codenames_database.png" width="50%"><p>
