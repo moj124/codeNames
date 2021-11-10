@@ -10,6 +10,7 @@
   - [Mac OS](#macos)
   - [Linux](#linux)
   - [Windows](#windows)
+- [Design](#design)
 - [Motivation](#motivation)
 - [Database](#database)
 - [Issues](#issues)
@@ -37,6 +38,9 @@
   yarn start
 ```
 
+## Design  
+  <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FhnKMmBN4bY7sR7eeuLC8Yz%2FCodenames%3Fnode-id%3D0%253A1" allowfullscreen></iframe>
+  
 ## Database
 <p align="center"><img src="https://github.com/moj124/codeNames/blob/main/public/media/codenames_database.png" width="50%"><p>
 
