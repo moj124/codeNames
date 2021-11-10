@@ -34,7 +34,7 @@
 ```
 
 ## Database
-<p align="center"><img src="https://raw.githubusercontent.com/moj124/Filipages/master/media/filipage_database.png" width="50%"><p>
+<p align="center"><img src="https://github.com/moj124/codeNames/blob/main/public/media/codenames_database.png" width="50%"><p>
 
 ## Motivation
   
